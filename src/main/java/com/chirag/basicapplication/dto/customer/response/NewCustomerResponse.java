@@ -20,5 +20,7 @@ public class NewCustomerResponse {
 
     private Status status;
 
+    private Long phone_no;
+
     private LocalDateTime created_at;
 }

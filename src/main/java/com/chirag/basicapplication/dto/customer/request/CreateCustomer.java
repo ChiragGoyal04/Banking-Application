@@ -15,4 +15,6 @@ public class CreateCustomer {
 
     private String address;
 
+    private Long phone_no;
+
 }
