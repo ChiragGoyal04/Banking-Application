@@ -1,55 +1,29 @@
-package com.chirag.basicapplication.entity;
+package com.chirag.basicapplication.dto.account.response;
 
+import com.chirag.basicapplication.entity.Customer;
+import com.chirag.basicapplication.entity.Transactions;
 import com.chirag.basicapplication.enums.Account_Type;
 import com.chirag.basicapplication.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table
-public class Account {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Data
+public class AccountResponse {
 
     @Column(unique = true)
     private String account_no;
 
-    @Enumerated(EnumType.STRING)
     private Account_Type accountType;
 
     private int balance;
 
     @Enumerated(EnumType.STRING)
-    private Status status = Status.ACTIVE;
-
-    @CreationTimestamp
-    private LocalDateTime created_at;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
-    @JsonIgnore
-    private Customer customer;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
-    @JsonIgnore
-    private List<Transactions> transactions;
-
-
-    // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Status status;
 
     public String getAccount_no() {
         return account_no;
@@ -106,4 +80,13 @@ public class Account {
     public void setTransactions(List<Transactions> transactions) {
         this.transactions = transactions;
     }
+
+    @CreationTimestamp
+    private LocalDateTime created_at;
+
+    @JsonIgnore// Creates a foreign key column in this table
+    private Customer customer;
+
+    @JsonIgnore
+    private List<Transactions> transactions;
 }
