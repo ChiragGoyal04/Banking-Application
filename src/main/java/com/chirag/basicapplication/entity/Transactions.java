@@ -6,6 +6,7 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table
@@ -27,7 +28,19 @@ public class Transactions {
     @CreationTimestamp
     private LocalDateTime created_at;
 
+    @Column(nullable = false, unique = true)
+    private String transactionId;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @PrePersist
+    private void generateTransactionId() {
+        if (transactionId == null || transactionId.isBlank()) {
+            transactionId = String.valueOf(
+                    ThreadLocalRandom.current().nextInt(100000, 1000000)
+            );
+        }
+    }
 }
