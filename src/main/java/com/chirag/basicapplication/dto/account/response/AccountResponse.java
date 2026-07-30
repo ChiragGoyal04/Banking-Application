@@ -84,9 +84,9 @@ public class AccountResponse {
     @CreationTimestamp
     private LocalDateTime created_at;
 
-    @JsonIgnore// Creates a foreign key column in this table
+//    @JsonIgnore// Creates a foreign key column in this table
     private Customer customer;
 
-    @JsonIgnore
+//    @JsonIgnore
     private List<Transactions> transactions;
 }

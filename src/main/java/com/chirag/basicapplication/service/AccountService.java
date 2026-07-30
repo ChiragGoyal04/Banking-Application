@@ -10,6 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class AccountService {
 
@@ -41,5 +44,16 @@ public class AccountService {
 
         return accountResponse;
 
+    }
+
+    public List<AccountResponse> getAllAccount(String customer_no){
+        List<Account> accounts=accountRepo.findByCustomerCustomer_no(customer_no);
+
+        List<AccountResponse> responses=new ArrayList<>();
+        for (Account account:accounts){
+            AccountResponse accountResponse=modelMapper.map(account,AccountResponse.class);
+            responses.add(accountResponse);
+        }
+        return responses;
     }
 }

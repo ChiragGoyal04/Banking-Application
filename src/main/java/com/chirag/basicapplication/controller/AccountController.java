@@ -28,4 +28,10 @@ public class AccountController {
         }
         return ResponseEntity.badRequest().body("Cannot create account as customer not present with customer number");
     }
+
+    @GetMapping
+    public ResponseEntity<?> getAccountByCustomer(@RequestParam String customer_no){
+        return ResponseEntity.ok().body(accountService.getAllAccount(customer_no));
+    }
+
 }
